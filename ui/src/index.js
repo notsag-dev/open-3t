@@ -1,6 +1,7 @@
 const {userService} = require('./services');
 const {config} = require('./config');
 const {skyBox} = require('./components/skyBox');
+const {city} = require('./components/city');
 
 /**
  * Global THREE inits
@@ -62,6 +63,10 @@ const init = async () => {
   scene.add(skybox.component);
   animate();
 
+  // City
+  const ct = Object.create(city);
+  ct.init(10);
+  scene.add(ct.component);
 };
 
 init();
