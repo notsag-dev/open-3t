@@ -1,5 +1,6 @@
 const {userService} = require('./services');
 const {config} = require('./config');
+const {skyBox} = require('./components/skyBox');
 
 /**
  * Global THREE inits
@@ -10,7 +11,7 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  100000,
+  500000,
 );
 camera.lookAt(1, 0, 0);
 const renderer = new THREE.WebGLRenderer();
@@ -55,24 +56,12 @@ const animate = () => {
  *
  */
 const init = async () => {
-  const {data: users} = await userService.getUsers();
-
-  const material = new THREE.MeshBasicMaterial({color: 0xffff00});
-  users.forEach(user => {
-    const geometry = new THREE.BoxBufferGeometry(
-      config.boxSize.width,
-      config.boxSize.height,
-      config.boxSize.depth);
-    const mesh = new THREE.Mesh(geometry, material);
-    const loc = user.locationOnGrid;
-    mesh.position.set(
-      (config.boxSize.width + config.boxPadding) * loc.x,
-      (config.boxSize.height + config.boxPadding) * loc.y,
-      (config.boxSize.depth + config.boxPadding) * loc.z);
-    scene.add(mesh);
-  });
-
+  // Sky box
+  const skybox = Object.create(skyBox);
+  await skybox.init();
+  scene.add(skybox.component);
   animate();
+
 };
 
 init();
