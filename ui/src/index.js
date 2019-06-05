@@ -23,11 +23,6 @@ controls.lookSpeed = 0.3;
 controls.movementSpeed = 300;
 controls.noFly = true;
 controls.lookVertical = true;
-controls.constrainVertical = true;
-controls.verticalMin = 1.0;
-controls.verticalMax = 2.0;
-controls.lon = -150;
-controls.lat = 120;
 
 const clock = new THREE.Clock();
 
@@ -66,7 +61,7 @@ const init = async () => {
 
   // City
   const city = Object.create(cityComponent);
-  city.init(20);
+  await city.init(4);
   scene.add(city.component);
 
   // Floor
