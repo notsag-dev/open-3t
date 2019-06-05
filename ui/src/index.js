@@ -1,6 +1,6 @@
 const {userService} = require('./services');
 const {config} = require('./config');
-const {cityComponent, floorComponent, skyBoxComponent} = require('./components');
+const {cityComponent, floorComponent, pigComponent, skyBoxComponent} = require('./components');
 
 /**
  * Global THREE inits
@@ -70,6 +70,11 @@ const init = async () => {
   const floor = Object.create(floorComponent);
   floor.init(1000);
   scene.add(floor.component);
+
+  // Pig
+  const pig = Object.create(pigComponent);
+  await pig.init();
+  scene.add(pig.component);
 };
 
 init();

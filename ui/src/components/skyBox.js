@@ -10,7 +10,7 @@ const skyBox = {
       {name: 'bottom', file: 'skyBox/bottom.png'},
       {name: 'front', file: 'skyBox/front.png'},
       {name: 'back', file: 'skyBox/back.png'}
-    ]);
+    ], {fog: false});
     this.component = texBox.component;
   }
 }

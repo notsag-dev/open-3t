@@ -6,5 +6,8 @@ module.exports = {
     maxHeight: 200,
     minHeight: 15
   },
-  boxPadding: 20,
+  boxPadding: 0,
+  roadWidthDefault: 10,
+  mainStreetWidth: 20,
+  roadNumBuildings: 4
 }

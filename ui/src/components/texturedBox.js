@@ -9,7 +9,6 @@ const texturedBox = {
 
     const materials = [];
     const textures = await loadTextures(texturesInfo);
-    console.log(textures);
     for (let i = 0; i < 6; i++) {
       materials.push(new THREE.MeshBasicMaterial(
         { map: textures[Object.keys(textures)[i]], side: THREE.BackSide }
