@@ -1,13 +1,19 @@
 module.exports = {
   apiUrl: 'http://localhost:8000/',
   boxSize: {
-    width: 20,
-    depth: 20,
-    maxHeight: 200,
+    width: 40,
+    depth: 40,
+    maxHeight: 250,
     minHeight: 15
   },
-  boxPadding: 0,
+  boxPadding: 0.01,
   roadWidthDefault: 10,
   mainStreetWidth: 20,
-  roadNumBuildings: 4
+  roadNumBuildings: 4,
+  butterflies: {
+    maxSize: 5
+  },
+  balls: {
+    maxRadius: 2
+  }
 }

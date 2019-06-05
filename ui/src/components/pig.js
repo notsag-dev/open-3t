@@ -1,15 +1,15 @@
 const {loadModel} = require('../utils/models');
-const {loadTexture} = require('../utils/textures');
+const {getTexture} = require('../utils/textures');
 
 const pig = {
   async init(pos) {
     pos = pos || {x: 0, y: 0, z:0};
     const model = await loadModel('./assets/models/pig.obj');
-    const matcap = await loadTexture('porcelain', 'matcap-porcelain-white.jpg');
+    const matcap = await getTexture('porcelain', 'matcap-porcelain-white.jpg');
     matcap.texture.encoding = THREE.sRGBEncoding;
     console.log(matcap.texture);
     const material = new THREE.MeshMatcapMaterial({
-      color: 0xFF69B4,
+      color: 0xff00e5,
       matcap: matcap.texture
     });
 

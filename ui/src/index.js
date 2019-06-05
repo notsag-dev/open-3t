@@ -13,7 +13,8 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   500000,
 );
-camera.lookAt(1, 0, 0);
+camera.position.set(-200, 20, 0);
+camera.lookAt(1, 20, 0);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -23,8 +24,12 @@ controls.lookSpeed = 0.3;
 controls.movementSpeed = 300;
 controls.noFly = true;
 controls.lookVertical = true;
+console.log(controls)
 
 const clock = new THREE.Clock();
+
+const ambientLight = new THREE.AmbientLight(0xffffff);
+scene.add(ambientLight);
 
 const animationObjects = [];
 
@@ -61,7 +66,7 @@ const init = async () => {
 
   // City
   const city = Object.create(cityComponent);
-  await city.init(4);
+  await city.init(3);
   scene.add(city.component);
 
   // Floor

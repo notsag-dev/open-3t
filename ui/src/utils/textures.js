@@ -1,6 +1,29 @@
 const loader = new THREE.TextureLoader();
 
-module.exports = {
+const textures = {};
+
+const exp = {
+  getTextures: async (texturesInfo) => {
+    const texturePromises = [];
+    texturesInfo.forEach(tinf => {
+      texturePromises.push(exp.getTexture(tinf.name, tinf.file));
+    });
+    const textures = await Promise.all(texturePromises);
+    const res = {};
+    textures.forEach(tex => {
+      res[tex.name] = tex.texture;
+    });
+    return res;
+  },
+
+  getTexture: (name, file) => {
+    if (textures[name]) {
+      return Promise.resolve({name, texture: textures[name]});
+    } else {
+      return exp.loadTexture(name, file);
+    }
+  },
+
   /**
    * Load a texture using the three js loader.
    * Return a promise.
@@ -11,7 +34,8 @@ module.exports = {
       loader.load(`./assets/textures/${file}`,
         // Function to be executed when the texture is loaded
         (texture) => {
-          resolve({ name: name, texture: texture });
+          textures[name] = texture;
+          resolve({name, texture});
         },
         null,
         // Function to be executed if the texture loading failed
@@ -31,7 +55,7 @@ module.exports = {
   loadTextures: async (texturesInfo) => {
     const texturePromises = []
     for (let i = 0; i < texturesInfo.length; i++) {
-      texturePromises.push(module.exports.loadTexture(
+      texturePromises.push(exp.loadTexture(
         texturesInfo[i].name, texturesInfo[i].file)
       );
     }
@@ -41,5 +65,7 @@ module.exports = {
       res[tinf.name] = tinf.texture;
     });
     return res;
-  }
+  },
 }
+
+module.exports = exp;

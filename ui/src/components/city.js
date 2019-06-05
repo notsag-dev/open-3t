@@ -8,7 +8,8 @@ const city = {
     for (let i = -size; i < size; i++) {
       for (let j = -size; j < size; j++) {
         const height = this.getHeight(i, j, maxDist);
-        const building = Object.create(buildings.butterfliesComponent);
+        const buildingProto = this.getRandomBuildingProto();
+        const building = Object.create(buildingProto);
         await building.init(
           config.boxSize.width,
           height,
@@ -20,7 +21,7 @@ const city = {
           i * (config.boxSize.width + config.boxPadding) +
             numRoadsX * config.roadWidthDefault +
             Math.sign(i) * config.mainStreetWidth / 2,
-          Math.floor(height / 2),
+          Math.floor(height / 2) + 0.1,
           j * (config.boxSize.depth + config.boxPadding) +
             numRoadsZ * config.roadWidthDefault + (config.mainStreetWidth / 2) * (Math.sign(j) || 1)
         );
@@ -31,7 +32,6 @@ const city = {
   },
 
   getHeight(gridI, gridJ, maxDist) {
-    // Height calculation
     const fictDist = Math.sqrt(Math.pow(gridI, 2) + Math.pow(gridJ, 2));
     const distCoef = fictDist / maxDist;
     const localMax = config.boxSize.maxHeight -
@@ -39,6 +39,12 @@ const city = {
     const height = Math.floor(config.boxSize.minHeight + Math.random() *
       (localMax - config.boxSize.minHeight) * (1 - distCoef));
     return height;
+  },
+
+  getRandomBuildingProto() {
+    const names = Object.keys(buildings);
+    const randInd = Math.floor(Math.random() * names.length);
+    return buildings[names[randInd]];
   }
 };
 
