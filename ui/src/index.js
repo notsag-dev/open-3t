@@ -1,7 +1,6 @@
 const {userService} = require('./services');
 const {config} = require('./config');
-const {skyBox} = require('./components/skyBox');
-const {city} = require('./components/city');
+const {cityComponent, floorComponent, skyBoxComponent} = require('./components');
 
 /**
  * Global THREE inits
@@ -18,7 +17,6 @@ camera.lookAt(1, 0, 0);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
 
 const controls = new THREE.FirstPersonControls(camera);
 controls.lookSpeed = 0.3;
@@ -58,15 +56,20 @@ const animate = () => {
  */
 const init = async () => {
   // Sky box
-  const skybox = Object.create(skyBox);
+  const skybox = Object.create(skyBoxComponent);
   await skybox.init();
   scene.add(skybox.component);
   animate();
 
   // City
-  const ct = Object.create(city);
-  ct.init(10);
-  scene.add(ct.component);
+  const city = Object.create(cityComponent);
+  city.init(10);
+  scene.add(city.component);
+
+  // Floor
+  const floor = Object.create(floorComponent);
+  floor.init(1000);
+  scene.add(floor.component);
 };
 
 init();
