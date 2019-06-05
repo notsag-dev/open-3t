@@ -31,6 +31,8 @@ controls.lat = 120;
 
 const clock = new THREE.Clock();
 
+const animationObjects = [];
+
 /**
  * Render function. Executed every frame.
  *
@@ -47,6 +49,7 @@ const animate = () => {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();
   controls.update(delta / 7);
+  animationObjects.forEach(obj => (obj.animate(delta)));
   render();
 };
 
@@ -63,7 +66,7 @@ const init = async () => {
 
   // City
   const city = Object.create(cityComponent);
-  city.init(10);
+  city.init(20);
   scene.add(city.component);
 
   // Floor
@@ -73,8 +76,9 @@ const init = async () => {
 
   // Pig
   const pig = Object.create(pigComponent);
-  await pig.init();
+  await pig.init({x: 0, y: 300, z: 0});
   scene.add(pig.component);
+  animationObjects.push(pig);
 };
 
 init();
