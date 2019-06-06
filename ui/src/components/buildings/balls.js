@@ -11,8 +11,7 @@ const balls = {
     this.height = height;
     this.depth = depth;
     this.materials = this.createMaterials();
-    this.balls = this.createBalls(height * 10);
-    console.log(this.balls)
+    this.balls = this.createBalls(height * 5);
     this.balls.forEach(ball => (group.add(ball)));
     this.component = group;
   },
@@ -23,13 +22,13 @@ const balls = {
   },
 
   getRandomPointInBox(maxRad) {
-    const width = this.width - maxRad;
-    const height = this.height - maxRad;
-    const depth = this.depth - maxRad;
+    const width = this.width - maxRad * 2;
+    const height = this.height - maxRad * 2;
+    const depth = this.depth - maxRad * 2;
     return {
-      x: Math.floor(Math.random() * width - width / 2),
-      y: Math.floor(Math.random() * height - height / 2),
-      z: Math.floor(Math.random() * depth - depth / 2),
+      x: Math.random() * width - width / 2,
+      y: Math.random() * height - height / 2,
+      z: Math.random() * depth - depth / 2,
     };
   },
 

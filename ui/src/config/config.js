@@ -1,10 +1,10 @@
 module.exports = {
   apiUrl: 'http://localhost:8000/',
   boxSize: {
-    width: 40,
-    depth: 40,
+    width: 100,
+    depth: 100,
     maxHeight: 250,
-    minHeight: 15
+    minHeight: 30
   },
   boxPadding: 0.01,
   roadWidthDefault: 10,
@@ -14,6 +14,9 @@ module.exports = {
     maxSize: 5
   },
   balls: {
-    maxRadius: 2
+    maxRadius: 4
+  },
+  cats: {
+    maxRotVel: 0.2
   }
 }

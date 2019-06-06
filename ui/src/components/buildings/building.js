@@ -12,6 +12,9 @@ const building = {
       side: THREE.DoubleSide
     });
     const mesh = new THREE.Mesh(geometry, material);
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
     this.component = mesh;
   }
 }
