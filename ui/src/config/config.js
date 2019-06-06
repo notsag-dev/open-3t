@@ -6,9 +6,11 @@ module.exports = {
     maxHeight: 250,
     minHeight: 30
   },
-  boxPadding: 0.01,
-  roadWidthDefault: 10,
-  mainStreetWidth: 20,
+  citySize: 40,
+  cityEmpty: true,
+  boxPadding: 10,
+  roadWidthDefault: 0,
+  mainStreetWidth: 100,
   roadNumBuildings: 4,
   butterflies: {
     maxSize: 5
@@ -18,5 +20,11 @@ module.exports = {
   },
   cats: {
     maxRotVel: 0.2
+  },
+  floor: {
+    numStripes: 200,
+    maxStripeSpeed: 50,
+    maxStripeWidth: 20,
+    maxStripeLength: 80,
   }
 }

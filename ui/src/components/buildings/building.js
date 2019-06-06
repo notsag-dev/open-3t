@@ -7,7 +7,7 @@ const building = {
       width, height, depth);
     const material = new THREE.MeshNormalMaterial({
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.7,
       color: 0xffff00,
       side: THREE.DoubleSide
     });

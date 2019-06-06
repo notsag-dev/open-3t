@@ -13,8 +13,8 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   500000,
 );
-camera.position.set(-200, 20, 0);
-camera.lookAt(1, 20, 0);
+camera.position.set(-20, 10, 0);
+camera.lookAt(0, 20, 0);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -65,14 +65,19 @@ const init = async () => {
 
   // City
   const city = Object.create(cityComponent);
-  await city.init(1);
+  await city.init(Math.floor(config.citySize / 4), config.cityEmpty);
   scene.add(city.component);
   animationObjects.push(city);
 
   // Floor
   const floor = Object.create(floorComponent);
-  floor.init(1000);
+  floor.init(
+   config.citySize * config.boxSize.width +
+   (config.citySize / config.roadNumBuildings) * config.roadWidthDefault +
+    config.mainStreetWidth
+  );
   scene.add(floor.component);
+  animationObjects.push(floor);
 
   // Pig
   const pig = Object.create(pigComponent);
