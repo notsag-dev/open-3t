@@ -6,6 +6,8 @@ const floor = {
     const material = new THREE.MeshBasicMaterial({
       color: 0x000000,
       side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.5
     });
     const mesh = new THREE.Mesh(geometry, material);
     this.component = new THREE.Group();
@@ -20,25 +22,22 @@ const floor = {
   createStripes(numStripes, size) {
     const stripes = [];
     const materials = this.createMaterials();
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x0000ff,
-      opacity: 0.6,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide,
-    });
     const widthMax = config.mainStreetWidth + config.boxSize.width;
     for (let i = 0; i < numStripes; i++) {
       const geometry = new THREE.PlaneBufferGeometry(
-        Math.random() * config.floor.maxStripeLength,
-        Math.random() * config.floor.maxStripeWidth
+        Math.random() * config.floor.maxStripeLength + config.floor.minStripeLength,
+        Math.random() * config.floor.maxStripeWidth + config.floor.minStripeWidth
       );
-      const newStripe = new THREE.Mesh(geometry, material);
+      const newStripe = new THREE.Mesh(
+        geometry,
+        materials[Math.floor(Math.random() * materials.length)]
+      );
       const xPos = Math.random() * size - size / 2;
       const yPos = (Math.random() * widthMax) -
         widthMax / 2;
       const zPos = Math.random() * -2;
       newStripe.position.set(xPos, yPos, zPos);
+      newStripe.initPosition = {x: xPos, y: yPos, z: zPos};
       stripes.push(newStripe);
       console.log(config.floor.maxStripeSpeed);
       newStripe.speed = {
@@ -58,16 +57,21 @@ const floor = {
   createStripeMaterial(color) {
     return new THREE.MeshBasicMaterial({
       color,
+      opacity: 0.5,
       transparent: true,
       blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
     });
   },
 
-  animate(delta) {
+  animate(delta, camPosition) {
     this.stripes.forEach(stripe => {
+      //console.log(stripe.position.distanceTo(camPosition));
+      stripe.visible = (stripe.position.distanceTo(camPosition) < 500);
+      if (Math.abs(stripe.position.x) > this.size / 2) {
+        stripe.position.x = stripe.initPosition.x;
+      }
       stripe.position.x += stripe.speed.x * delta;
-      //stripe.position.y += stripe.speed.y * delta/1000;
-      //stripe.position.z += stripe.speed.z * delta/1000;
     });
   },
 }

@@ -48,7 +48,7 @@ const animate = () => {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();
   controls.update(delta / 7);
-  animationObjects.forEach(obj => (obj.animate(delta)));
+  animationObjects.forEach(obj => (obj.animate(delta, camera.position)));
   render();
 };
 
