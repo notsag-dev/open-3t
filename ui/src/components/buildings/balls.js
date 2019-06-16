@@ -1,60 +1,54 @@
 const {building} = require('./building');
 const {config} = require('../../config');
 
-const balls = {
-  init(width, height, depth) {
-    const group = new THREE.Group();
-    const b = Object.create(building);
-    b.init(width, height, depth);
-    group.add(b.component);
-    this.width = width;
-    this.height = height;
-    this.depth = depth;
-    this.materials = this.createMaterials();
-    this.balls = this.createBalls(height * 5);
-    this.balls.forEach(ball => (group.add(ball)));
-    this.component = group;
-  },
+const balls = Object.create(building);
 
-  createMaterials() {
-    const colors = [0xff9090, 0xeef1ff, 0xffffcc, 0x0000ff, 0xff0000, 0x52ff6a];
-    return colors.map(c => this.createLightMaterial(c));
-  },
+balls.init = function(width, height, depth) {
+  building.init.call(this, width, height, depth);
 
-  getRandomPointInBox(maxRad) {
-    const width = this.width - maxRad * 2;
-    const height = this.height - maxRad * 2;
-    const depth = this.depth - maxRad * 2;
-    return {
-      x: Math.random() * width - width / 2,
-      y: Math.random() * height - height / 2,
-      z: Math.random() * depth - depth / 2,
-    };
-  },
+  this.materials = this.createMaterials();
+  this.balls = this.createBalls(height * 5);
+  this.balls.forEach(ball => this.component.add(ball));
+};
 
-  createBalls(number) {
-    const res = [];
-    for (let i = 0; i < number; i++) {
-      const maxRad = config.balls.maxRadius;
-      const sphSize = Math.floor(Math.random() * maxRad);
-      const geometry = new THREE.SphereGeometry(sphSize, 8, 8);
-      const matInd = Math.floor(Math.random() * this.materials.length);
-      const material = this.materials[matInd];
-      const pos = this.getRandomPointInBox(maxRad);
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.set(pos.x, pos.y, pos.z);
-      res.push(mesh);
-    }
-    return res;
-  },
+balls.createMaterials = function() {
+  const colors = [0xff9090, 0xeef1ff, 0xffffcc, 0x0000ff, 0xff0000, 0x52ff6a];
+  return colors.map(c => this.createLightMaterial(c));
+};
 
-  createLightMaterial(color) {
-    return new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-    });
-  },
-}
+balls.getRandomPointInBox = function(maxRad) {
+  const width = this.width - maxRad * 2;
+  const height = this.height - maxRad * 2;
+  const depth = this.depth - maxRad * 2;
+  return {
+    x: Math.random() * width - width / 2,
+    y: Math.random() * height - height / 2,
+    z: Math.random() * depth - depth / 2,
+  };
+};
+
+balls.createBalls = function(number) {
+  const res = [];
+  for (let i = 0; i < number; i++) {
+    const maxRad = config.balls.maxRadius;
+    const sphSize = Math.floor(Math.random() * maxRad);
+    const geometry = new THREE.SphereGeometry(sphSize, 8, 8);
+    const matInd = Math.floor(Math.random() * this.materials.length);
+    const material = this.materials[matInd];
+    const pos = this.getRandomPointInBox(maxRad);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(pos.x, pos.y, pos.z);
+    res.push(mesh);
+  }
+  return res;
+};
+
+balls.createLightMaterial = function(color) {
+  return new THREE.MeshBasicMaterial({
+    color,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+  });
+};
 
 module.exports = {balls};

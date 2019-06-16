@@ -11,5 +11,8 @@ module.exports = {
         allowForLoopAfterthoughts: true,
       },
     ],
+    'func-names': ['warn', 'as-needed'],
+    'no-undef': 'off',
+    'no-param-reassign': 'off'
   },
 };
