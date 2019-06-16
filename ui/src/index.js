@@ -1,4 +1,3 @@
-const {userService} = require('./services');
 const {config} = require('./config');
 const {cityComponent, floorComponent, pigComponent, skyBoxComponent} = require('./components');
 
