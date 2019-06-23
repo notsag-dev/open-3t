@@ -56,11 +56,12 @@ const animate = () => {
  *
  */
 const init = async () => {
+  animate();
+
   // Sky box
   const skybox = Object.create(skyBoxComponent);
   await skybox.init();
   scene.add(skybox.component);
-  animate();
 
   // City
   const city = Object.create(cityComponent);
@@ -83,6 +84,7 @@ const init = async () => {
   await pig.init({x: 0, y: 300, z: 0});
   scene.add(pig.component);
   animationObjects.push(pig);
+
 };
 
 init();
